@@ -14,7 +14,7 @@ public class Person {
         return age;
     }
 
-    public void setAge(int age) throws Exception{
+    public void setAge(int age) throws IllegalAgeException{
         /*
         * 当不满足业务逻辑需求时，可以主动抛出异常
         *
@@ -22,7 +22,7 @@ public class Person {
         * 当方法被调用时需要处理异常(RuntimeException除外)否则编译不通过。
         * */
         if (age < 0 || age > 1000){
-            throw new RuntimeException("年龄不合法");
+            throw new IllegalAgeException("年龄不合法");
         }
         this.age = age;
     }

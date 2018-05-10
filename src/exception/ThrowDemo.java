@@ -17,7 +17,8 @@ public class ThrowDemo {
         try {
             person.setAge(2000000);
         }catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 

@@ -44,9 +44,10 @@ public class Server {
                 Socket accept = serverSocket.accept();
                 ChatSocket socket = new ChatSocket(accept);
                 ClientMannager.clients.add(socket);
+                System.out.println(accept.getInetAddress().toString().substring(1) + "连接到了服务器!");
                 new Thread(socket).start();
             }
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
             System.out.println("服务器已关闭");
 		}

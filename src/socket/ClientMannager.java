@@ -12,7 +12,6 @@ public class ClientMannager {
     public static void sendAll(ChatSocket chatSocket, String send,String address){
         for (ChatSocket client : clients){
             if (!client.equals(chatSocket)) {
-                System.out.println(send);
                 client.send(address);
                 client.send(send);
                 client.send("");

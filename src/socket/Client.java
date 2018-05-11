@@ -58,15 +58,30 @@ public class Client {
 			reader = new BufferedReader(
 					new InputStreamReader(socket.getInputStream(), "utf-8"));
 			System.out.println("所有通讯已建成");
-			Read read = new Read();
-			Write write = new Write();
-            new Thread(read).start();
-            new Thread(write).start();
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			//读取从服务器发来的信息
+			new Thread() {
+				@Override
+				public void run() {
+					try {
+						while (true) {
+							System.out.println(Client.reader.readLine());
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}.start();
+			//发送信息到服务器并通过服务器进行广播
+			new Thread() {
+				@Override
+				public void run() {
+					while (true) {
+						Client.writer.println(Client.scanner.nextLine());
+					}
+				}
+			}.start();
 		} catch (Exception e) {
-			e.printStackTrace();
+            System.out.println("聊天结束");
 		}
 
 	}
@@ -74,28 +89,5 @@ public class Client {
 	public static void main(String[] args) {
 		Client client = new Client();
 		client.start();
-	}
-}
-class Read implements Runnable {
-
-	@Override
-	public void run() {
-		try {
-		    while(true){
-                System.out.println(Client.reader.readLine());
-            }
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-}
-class Write implements Runnable {
-
-	@Override
-	public void run() {
-	    while(true){
-            Client.writer.println(Client.scanner.nextLine());
-
-        }
 	}
 }

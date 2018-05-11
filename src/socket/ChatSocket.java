@@ -43,13 +43,15 @@ public class ChatSocket implements Runnable {
 		while (true) {
 			try {
 				say = reader.readLine();
-                System.out.println("run");
                 String address = socket.getInetAddress().toString().substring(1) + "  say:";
                 System.out.println(address);
+                System.out.println(say);
                 ClientMannager.sendAll(this, say, address);
 
 			} catch (IOException e) {
 				ClientMannager.clients.remove(this);
+                System.out.println("服务器删除了一个客户端");
+                break;
 			}
 		}
 

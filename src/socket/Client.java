@@ -81,7 +81,14 @@ public class Client {
 				}
 			}.start();
 		} catch (Exception e) {
-            System.out.println("聊天结束");
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			System.out.println("聊天结束");
 		}
 
 	}

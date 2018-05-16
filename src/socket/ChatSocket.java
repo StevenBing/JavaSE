@@ -38,20 +38,45 @@ public class ChatSocket implements Runnable {
 		writer.println(send);
 	}
 	@Override
+	/*
+	* 当客户端与服务器断开连接时，不同系统的客户端在服务端这边体现的不一样
+	* windows的客户端断开时，服务端这里reader.readLine方法通常直接抛出异常。
+	* Linux的客户端断开时，reader.readLine方法返回值为null。
+	*
+	* 只要进入了try,必定会执行finally!!!!!!
+	* */
 	public void run() {
+		boolean flag = true;
 		String say = null;
 		while (true) {
 			try {
 				say = reader.readLine();
-                String address = socket.getInetAddress().toString().substring(1) + "  say:";
-                System.out.println(address);
-                System.out.println(say);
-                ClientMannager.sendAll(this, say, address);
+				if (say == null) {
+					flag = false;
+					continue;
+				}
+				String address = socket.getInetAddress().toString().substring(1)
+						+ "  say:";
+				System.out.println(address);
+				System.out.println(say);
+				ClientMannager.sendAll(this, say, address);
 
 			} catch (IOException e) {
-				ClientMannager.clients.remove(this);
-                System.out.println("服务器删除了一个客户端");
-                break;
+				flag =false;
+			} finally{
+				if (!flag){
+					ClientMannager.clients.remove(this);
+					System.out.println("服务器删除了一个客户端");
+					flag = true;
+					if (socket != null) {
+						try {
+							socket.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					break;
+				}
 			}
 		}
 

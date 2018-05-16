@@ -14,7 +14,7 @@ public class ClientMannager {
             if (!client.equals(chatSocket)) {
                 client.send(address);
                 client.send(send);
-                client.send("");
+                client.send("#----------------*----------------#");
             }
         }
     }

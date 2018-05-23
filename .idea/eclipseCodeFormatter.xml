@@ -4,7 +4,7 @@
     <option name="projectSpecificProfile">
       <ProjectSpecificProfile>
         <option name="formatter" value="ECLIPSE" />
-        <option name="pathToConfigFileJava" value="$USER_HOME$/Downloads/codestyl.xml" />
+        <option name="pathToConfigFileJava" value="D:/my/codestyl.xml" />
         <option name="selectedJavaProfile" value="Eclipse 2.1 [built-in]-1" />
       </ProjectSpecificProfile>
     </option>
